@@ -15,3 +15,6 @@ ym_*
 /custom.css
 /microblog-main*.css
 /content/test.md
+
+# Local Netlify folder
+.netlify
