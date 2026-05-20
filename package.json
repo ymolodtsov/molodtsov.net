@@ -1,0 +1,23 @@
+{
+  "name": "microblog",
+  "version": "1.0.0",
+  "description": "A regular Hugo version of the blog exported from Micro.blog.",
+  "scripts": {
+    "build": "node scripts/generate-image-derivatives.mjs && hugo --gc --minify",
+    "optimize-images": "node scripts/optimize-images.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ymolodtsov/molodtsov.net.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/ymolodtsov/molodtsov.net/issues"
+  },
+  "homepage": "https://github.com/ymolodtsov/molodtsov.net#readme",
+  "devDependencies": {
+    "sharp": "^0.34.5"
+  }
+}

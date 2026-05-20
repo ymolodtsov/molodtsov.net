@@ -13,8 +13,8 @@ Then open <http://127.0.0.1:1313/>.
 ## Build
 
 ```sh
-node scripts/optimize-images.mjs
-hugo --gc --minify
+npm run optimize-images
+npm run build
 ```
 
 The generated static site is written to `public/`.

@@ -5,6 +5,7 @@ node_modules/
 # Hugo build output and cache
 public/
 resources/
+static/generated/
 
 # Original Micro.blog exports/backups
 *.bar
