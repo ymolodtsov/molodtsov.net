@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A regular Hugo version of the blog exported from Micro.blog.",
   "scripts": {
-    "build": "node scripts/generate-netlify-redirects.mjs && node scripts/generate-image-derivatives.mjs && hugo --gc --minify",
+    "build": "node scripts/generate-netlify-redirects.mjs && node scripts/generate-image-derivatives.mjs && hugo --gc --minify && node scripts/remove-public-alias-files.mjs",
     "optimize-images": "node scripts/optimize-images.mjs"
   },
   "repository": {
