@@ -1,0 +1,32 @@
+{{ if .Title }}
+  <figure>
+{{ end }}
+{{ $destination := .Destination }}
+{{ $display := $destination }}
+{{ $clean := replaceRE "^/" "" $destination }}
+{{ if hasPrefix $clean "uploads/" }}
+  {{ $generated := replaceRE "\\.(?i:jpe?g|png|webp)$" "-inline.webp" (printf "/generated/%s" $clean) }}
+  {{ if fileExists (printf "static%s" $generated) }}
+    {{ $display = $generated }}
+  {{ end }}
+{{ end }}
+<a href="{{ .Destination | safeURL }}" 
+   class="glightbox"
+   data-gallery="{{ .Page.File.UniqueID }}"
+   {{ with .Title }} title="{{ . }}" {{ end }}
+>
+  <img src ="{{ $display | safeURL }}" 
+       alt="{{ .Text }}" 
+       loading="lazy"
+       decoding="async"
+       {{ with .Title }}
+          title="{{ . }}"
+       {{ end }} 
+  />
+</a>
+   {{ if .Title }}
+      <figcaption>{{ .Title }}</figcaption>
+   {{ end }}
+{{ if .Title }}
+  </figure>
+{{ end }}

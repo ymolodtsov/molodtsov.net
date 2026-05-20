@@ -1,0 +1,115 @@
+{
+  "title": "Юрий Молодцов",
+  "baseURL": "https://molodtsov.net/",
+  "mediaTypes": {
+    "application/json": {
+      "suffixes": [
+        "json"
+      ]
+    }
+  },
+  "outputFormats": {
+    "RSS": {
+      "baseName": "feed"
+    },
+    "JSON": {
+      "baseName": "feed"
+    },
+    "ArchiveJSON": {
+      "mediaType": "application/json",
+      "path": "archive",
+      "baseName": "index",
+      "isPlainText": true,
+      "notAlternative": true
+    },
+    "PhotosJSON": {
+      "mediaType": "application/json",
+      "path": "photos",
+      "baseName": "index",
+      "isPlainText": true,
+      "notAlternative": true
+    }
+  },
+  "outputs": {
+    "home": [
+      "HTML",
+      "RSS",
+      "JSON",
+      "ArchiveJSON",
+      "PhotosJSON"
+    ],
+    "page": [
+      "HTML"
+    ],
+    "section": [
+      "HTML"
+    ],
+    "taxonomy": [
+      "HTML",
+      "RSS",
+      "JSON"
+    ],
+    "term": [
+      "HTML",
+      "RSS",
+      "JSON"
+    ]
+  },
+  "taxonomies": {
+    "category": "categories"
+  },
+  "rssLimit": 25,
+  "uglyURLs": false,
+  "markup": {
+    "goldmark": {
+      "renderer": {
+        "unsafe": true
+      }
+    }
+  },
+  "enableRobotsTXT": true,
+  "languageCode": "ru",
+  "defaultContentLanguage": "ru",
+  "pluralizeListTitles": false,
+  "params": {
+    "description": "Блог для фотографий и заметок",
+    "twitter_username": "yury_mol",
+    "github_username": "",
+    "instagram_username": "ymolodtsov",
+    "paginate_home": true,
+    "paginate_categories": true,
+    "theme_seconds": "1",
+    "plugins_css": [
+      "/css/all.min.css?v=5",
+      "/css/photos-grid.css?v=6",
+      "/img-gallery.css?v=5"
+    ],
+    "plugins_js": [
+      "/glightbox.js?v=6"
+    ],
+    "plugins_html": [
+      "glightbox.html",
+      "twitter_meta.html",
+      "open_graph_meta.html"
+    ],
+    "years": [
+      "2026",
+      "2025",
+      "2024",
+      "2023",
+      "2022"
+    ],
+    "photos_grid_style": "masonry",
+    "show_all_photos": true,
+    "included_categories": "photo",
+    "author": {
+      "name": "Юрий Молодцов",
+      "avatar": "/assets/img/avatar.jpg",
+      "username": "yury_mol"
+    },
+    "site_image": "/uploads/2022/1142ee3a81.jpg"
+  },
+  "pagination": {
+    "pagerSize": 15
+  }
+}

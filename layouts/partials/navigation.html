@@ -1,0 +1,20 @@
+<nav class="main-nav">
+
+<img src="{{ .Site.Params.author.avatar }}" class="site-image">
+{{ if ne .IsHome true }} 
+<a href="/" class="site-title">Юрий Молодцов</a>
+ {{ else }}
+<span class="site-title">Юрий Молодцов</span>
+ {{ end }} 
+<a href="/categories/article">Тексты</a>
+<a href="/categories/film">Кино и ТВ</a>
+<a href="/categories/book">Книги</a> 
+<a href="/categories/travel">Путешествия</a> 
+	{{ range .Site.Menus.main }}
+		{{ if .Page.Params.redirect_url }}
+			<a href="{{ .Page.Params.redirect_url }}">{{ .Name }}</a>
+		{{ else }}
+			<a href="{{ .URL | relLangURL | safeURL }}">{{ .Name }}</a>
+		{{ end }}
+	{{ end }}
+</nav>

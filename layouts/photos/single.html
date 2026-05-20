@@ -1,0 +1,72 @@
+{{ define "main" }}
+  {{ $photos := slice }}
+  {{ $photoPages := slice }}
+
+  {{ range where .Site.RegularPages.ByDate.Reverse "Type" "post" }}
+    {{ $page := . }}
+    {{ $categories := apply (.Params.categories | default slice) "lower" "." }}
+    {{ if in $categories "photo" }}
+      {{ $photoPages = $photoPages | append $page }}
+    {{ end }}
+  {{ end }}
+
+  {{ range $photoPages }}
+    {{ $postURL := .RelPermalink }}
+    {{ $postTitle := .Title }}
+    {{ $postDate := .Date.Format "2006-01-02" }}
+    {{ $items := .Params.photos_with_metadata }}
+
+    {{ if not $items }}
+      {{ with .Params.photos }}
+        {{ $items = slice }}
+        {{ range . }}
+          {{ $items = $items | append (dict "url" .) }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+
+    {{ range $items }}
+      {{ $url := "" }}
+      {{ if reflect.IsMap . }}
+        {{ $url = .url }}
+      {{ else }}
+        {{ $url = . }}
+      {{ end }}
+
+      {{ if $url }}
+        {{ $photos = $photos | append (merge (dict "url" $url "post_url" $postURL "post_title" $postTitle "post_date" $postDate) (cond (reflect.IsMap .) . dict)) }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+
+  <div class="photos-grid photos-grid--local" data-photo-grid data-initial-count="80" data-batch-size="80">
+    {{ range $index, $photo := $photos }}
+      {{ $caption := cond (ne $photo.post_title "") (printf "%s - %s" $photo.post_date $photo.post_title) $photo.post_date }}
+      {{ $thumb := $photo.url }}
+      {{ $clean := replaceRE "^/" "" $photo.url }}
+      {{ if hasPrefix $clean "uploads/" }}
+        {{ $generated := replaceRE "\\.(?i:jpe?g|png|webp)$" "-thumb.webp" (printf "/generated/%s" $clean) }}
+        {{ if fileExists (printf "static%s" $generated) }}
+          {{ $thumb = $generated }}
+        {{ end }}
+      {{ end }}
+      <a
+        href="{{ $photo.url }}"
+        class="photos-grid__item glightbox"
+        data-gallery="photos"
+        data-caption="{{ $caption }}"
+        data-post-url="{{ $photo.post_url }}"
+        data-glightbox="title:{{ $caption }};description:<a href='{{ $photo.post_url }}'>Открыть запись</a>"
+      >
+        <img
+          data-src="{{ $thumb }}"
+          src="{{ $thumb }}"
+          {{ with $photo.width }}width="{{ . }}"{{ end }}
+          {{ with $photo.height }}height="{{ . }}"{{ end }}
+          alt="{{ with $photo.alt }}{{ . }}{{ else }}{{ $caption }}{{ end }}"
+          loading="{{ cond (lt $index 18) "eager" "lazy" }}"
+        />
+      </a>
+    {{ end }}
+  </div>
+{{ end }}

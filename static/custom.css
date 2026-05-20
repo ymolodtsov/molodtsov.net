@@ -1,0 +1,336 @@
+.site-title {
+    font-weight: 700 !important;
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 16px;
+    line-height: 1.35;
+    margin-left: 10px;
+}
+
+.site-image {
+    display: inline;
+    width: 26px !important;
+    border-radius: 13px;
+    margin-bottom: -6px;
+    margin-left: 10px;
+}
+
+.site-logo {
+    display: inline-block;
+    padding: 20px 20px 0;
+    margin: 0 auto;
+    text-align: left;
+    z-index: 100;
+}
+
+.archive {
+    margin-top: 60px;
+}
+
+.archive__shortcuts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    padding-bottom: 28px;
+    margin-bottom: 34px;
+    border-bottom: 1px solid #eee;
+    font-size: 16px;
+    line-height: 1.35;
+}
+
+.archive__shortcuts a {
+    color: #1D45C9;
+    font-weight: 500;
+    border-bottom: 1px solid #DFE8FA;
+}
+
+.archive__shortcuts a:hover {
+    border-bottom: 1px solid #f0e5de !important;
+    color: #cb3b69 !important;
+}
+
+.archive__year {
+    margin-top: 48px;
+    font-size: 32px;
+    line-height: 1.1;
+}
+
+.archive__year:first-of-type {
+    margin-top: 0;
+}
+
+.archive__month {
+    margin-top: 28px;
+    margin-bottom: 10px;
+    color: #586575;
+    font-size: 16px;
+    line-height: 1.35;
+    text-transform: uppercase;
+    letter-spacing: 0;
+}
+
+.archive-item {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 12px;
+    align-items: start;
+    padding: 11px 0;
+    border-top: 1px solid #eee;
+}
+
+.archive-item:has(.archive-item__thumb) {
+    grid-template-columns: 34px 56px minmax(0, 1fr);
+}
+
+.archive-item__date {
+    margin-top: 2px;
+    color: #9aa0a8;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.35;
+    border-bottom: 0;
+}
+
+.archive-item__date:hover {
+    color: #cb3b69 !important;
+}
+
+.archive-item__thumb {
+    display: block;
+    width: 56px;
+    height: 56px;
+    overflow: hidden;
+    border-bottom: 0;
+    border-radius: 6px;
+    background: #f2f1f1;
+}
+
+.archive-item__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: 0;
+    border-radius: 6px !important;
+}
+
+.archive-item__body {
+    min-width: 0;
+}
+
+.archive-item__title {
+    color: #000;
+    font-weight: 700;
+    line-height: 1.35;
+    border-bottom: 0;
+}
+
+.archive-item__title:hover {
+    color: #cb3b69 !important;
+}
+
+.archive-item__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px 8px;
+    margin-top: 5px;
+    color: #9aa0a8;
+    font-size: 13px;
+    line-height: 1.35;
+}
+
+.archive-item__meta span:not(:last-child)::after {
+    content: "/";
+    margin-left: 8px;
+    color: #d0d4d7;
+}
+
+@media screen and (max-width: 540px) {
+    .archive {
+        margin-top: 45px;
+    }
+
+    .archive-item,
+    .archive-item:has(.archive-item__thumb) {
+        grid-template-columns: 28px 44px minmax(0, 1fr);
+        gap: 10px;
+    }
+
+    .archive-item:not(:has(.archive-item__thumb)) {
+        grid-template-columns: 28px minmax(0, 1fr);
+    }
+
+    .archive-item__thumb {
+        width: 44px;
+        height: 44px;
+    }
+
+    .archive-item__title {
+        font-size: 17px;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+
+  /* GENERAL */
+
+  body {
+    color: #abaeb0;
+    background: #151414;
+  }
+
+h1, h2, .post-body h1, .post-body h2, .post-body h3, h1 a, h2 a, h2 a:visited, .post-body h4, .post-body h5, .post-body h6 {
+    color: #E6E9EC;
+  }
+
+  a, p a, ul a, ol a {
+    color: ##E6E9EC;
+    /*
+    transition: none !important;
+    box-shadow: none !important;
+    */
+  }
+
+  b, strong {
+    color: #BBC3CB;
+  }
+  
+  span.divider {
+    background-color: #2B343B;
+  }
+
+  /* CUSTOM */ 
+  nav.main-nav a, #footer a, #post-nav a, li > a, p a, .block-links a {
+      color: #a1bff1;
+      font-weight: 500;
+      border-bottom: 1px solid #323d51;
+      text-decoration: none;
+  }
+
+  nav.main-nav a:hover, #footer a:hover, #post-nav a:hover, li > a:hover, p a:hover, .block-links a:hover {
+      border-bottom: 1px solid #553530 !important;
+      color: #cc4576 !important;
+      transition: all .2s;
+      -webkit-transition: all .2s;
+      -o-transition: all .2s;
+  }
+
+
+  #search input.field  {
+    color: #686768;
+    background: #252529;
+    border: 2px solid #252529;
+  }
+
+  #post-meta img.avatar {
+    box-shadow: 0 0 0 3px #2E3036;
+  } 
+
+  blockquote {
+    color: #abaeb0;
+    border-left: 4px solid #94A2C7;
+    background: #24272C;
+  }
+
+  nav.main-nav {
+    background: #151414;
+    top: 0;
+  }
+
+  nav.main-nav a {
+    color: #90A3cA
+  }
+
+  nav.main-nav a:hover {
+    color: #B8C3CC;
+  }
+
+  a.cta {
+      background: #151414;
+      color: #a1bff1;
+      padding: 6px 14px;
+      border: 2px solid #323d51;
+      border-radius: 20px;
+      white-space: nowrap;
+  }
+
+  a.cta:hover {
+      background: #cc4576;
+      color: #ffffff !important;
+      border: 2px solid #cc4576 !important;
+  }
+
+  .archive__shortcuts,
+  .archive-item {
+      border-color: #2B343B;
+  }
+
+  .archive__shortcuts a {
+      color: #a1bff1;
+      border-bottom: 1px solid #323d51;
+  }
+
+  .archive__shortcuts a:hover {
+      border-bottom: 1px solid #553530 !important;
+      color: #cc4576 !important;
+  }
+
+  .archive__month {
+      color: #87919f;
+  }
+
+  .archive-item__date,
+  .archive-item__meta {
+      color: #68717d;
+  }
+
+  .archive-item__title {
+      color: #E6E9EC;
+  }
+
+  .archive-item__thumb {
+      background: #24272C;
+  }
+
+  .archive-item__meta span:not(:last-child)::after {
+      color: #3d4650;
+  }
+
+  /* POST */
+
+  #post-nav a {
+    /*
+    transition: none !important;
+    box-shadow: none !important;
+    */
+  }
+
+  #post-meta div span.dark {
+    color: #BBC3CB; 
+  }
+
+  #post-meta div a {
+    color: #BBC3CB;
+  }
+
+  #post-meta div a:hover {
+    color: #E5E9EC;
+  }
+
+  #post-nav a {
+    color: #E5E9EC;
+    font-weight: bold;
+  }
+
+  #post-meta {
+    border-color: #2B343B !important;
+  }
+
+  .dates, a.dates {
+    color: #586575;
+  }
+
+  a.dates:hover, a .dates:hover {
+    color: #cc4576 !important;
+  }
+
+}

@@ -1,0 +1,27 @@
+<li>
+<article>
+  {{ if .Title }}
+  <section class="post-body">
+  <header>
+	<h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+  </header>
+  <section class="post-body">
+    {{ if .Truncated }}
+      {{ .Summary | safeHTML }}
+      <p><a class="cta" href="{{ .RelPermalink }}">Далее</a></p>
+    {{ else }}
+      {{ .Content }}
+    {{ end }}
+  </section>
+  </section>
+  {{ else }}
+	{{ .Content }}
+  {{ end }}
+  <a href="{{ .RelPermalink }}" class="u-url">
+	<aside class="dates">
+	  <time datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}" class="dt-published">→ {{ .Date.Day }} {{ index $.Site.Data.months (printf "%d" .Date.Month) }} {{ .Date.Year }} {{ .Date.Format "15:04" }}</time>
+	</aside>
+  </a>
+</article>
+</li>
+<span class="separator"><span class="divider"></span></span>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ru">
+{{ partial "head.html" . }}
+<body>
+  {{ partial "header.html" . }}
+  <section id="wrapper" {{ with .File }}{{ if eq .Dir "about/" }} class="bio" {{ end }}{{ end }}>
+	{{ block "main" . }}{{ end }}
+  </section>
+  {{ partial "footer.html" . }}
+  {{ partial "custom_footer.html" . }}
+		{{ range .Site.Params.plugins_js }}
+			<script src="{{ . }}"></script>
+		{{ end }}
+</body>
+</html>

@@ -1,0 +1,17 @@
+.DS_Store
+.hugo_build.lock
+node_modules/
+
+# Hugo build output and cache
+public/
+resources/
+
+# Original Micro.blog exports/backups
+*.bar
+*.zip
+ym_*
+
+# Pre-conversion theme/source leftovers kept locally for reference
+/custom.css
+/microblog-main*.css
+/content/test.md

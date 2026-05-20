@@ -1,0 +1,22 @@
+{{ define "main" }}
+<article class="h-entry post">
+  <header>
+	{{ with .Title }}
+    <h1 class="p-name">{{ . }}</h1>
+    {{ end }}
+    <h2 class="headline">
+      <time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">
+        <span class="u-url dates" href="{{ .Permalink }}"><!--{{ .Date.Format "2006-1-2" }}-->{{ .Date.Day }} {{ index $.Site.Data.months (printf "%d" .Date.Month) }} {{ .Date.Year }}</span>
+      </time>
+    </h2>
+  </header>
+  <section class="e-content post-body">
+      {{ .Content }}
+  </section>
+
+</article>
+
+{{ end }}
+
+
+

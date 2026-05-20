@@ -1,0 +1,102 @@
+{{ $months := dict
+  "01" "январь"
+  "02" "февраль"
+  "03" "март"
+  "04" "апрель"
+  "05" "май"
+  "06" "июнь"
+  "07" "июль"
+  "08" "август"
+  "09" "сентябрь"
+  "10" "октябрь"
+  "11" "ноябрь"
+  "12" "декабрь"
+}}
+
+<div class="archive">
+  <div class="archive__shortcuts">
+    <a href="/categories/favorites/">Избранное</a>
+  </div>
+
+  {{ $currentYear := "" }}
+  {{ $currentMonth := "" }}
+  {{ $posts := where .Site.RegularPages.ByDate.Reverse "Type" "post" }}
+  {{ range $posts }}
+    {{ $year := .Date.Format "2006" }}
+    {{ $monthNumber := .Date.Format "01" }}
+    {{ $monthKey := printf "%s-%s" $year $monthNumber }}
+
+    {{ if ne $year $currentYear }}
+      {{ $currentYear = $year }}
+      <h1 class="archive__year">{{ $year }}</h1>
+    {{ end }}
+
+    {{ if ne $monthKey $currentMonth }}
+      {{ $currentMonth = $monthKey }}
+      <h2 class="archive__month">{{ index $months $monthNumber }}</h2>
+    {{ end }}
+
+    {{ $title := strings.TrimSpace .Title }}
+    {{ if eq $title "" }}
+      {{ $title = .Summary | plainify | strings.TrimSpace | truncate 110 }}
+    {{ end }}
+
+    {{ $thumb := "" }}
+    {{ with .Params.photos_with_metadata }}
+      {{ with index . 0 }}
+        {{ if reflect.IsMap . }}
+          {{ $thumb = .url }}
+        {{ else }}
+          {{ $thumb = . }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+    {{ if not $thumb }}
+      {{ with .Params.photos }}
+        {{ $thumb = index . 0 }}
+      {{ end }}
+    {{ end }}
+    {{ if not $thumb }}
+      {{ with .Params.images }}
+        {{ $thumb = index . 0 }}
+      {{ end }}
+    {{ end }}
+    {{ if $thumb }}
+      {{ $clean := replaceRE "^/" "" $thumb }}
+      {{ if hasPrefix $clean "uploads/" }}
+        {{ $generated := replaceRE "\\.(?i:jpe?g|png|webp)$" "-thumb.webp" (printf "/generated/%s" $clean) }}
+        {{ if fileExists (printf "static%s" $generated) }}
+          {{ $thumb = $generated }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+    {{ if eq $title "" }}
+      {{ if $thumb }}
+        {{ $title = "Фото" }}
+      {{ else }}
+        {{ $title = "Запись" }}
+      {{ end }}
+    {{ end }}
+
+    <article class="archive-item h-entry">
+      <a class="archive-item__date u-url" href="{{ .RelPermalink }}">
+        <time class="dt-published" datetime="{{ .Date.Format "2006-01-02T15:04:05-0700" }}">{{ .Date.Format "02" }}</time>
+      </a>
+      {{ if $thumb }}
+        <a class="archive-item__thumb" href="{{ .RelPermalink }}" aria-hidden="true" tabindex="-1">
+          <img src="{{ $thumb | safeURL }}" alt="" loading="lazy" decoding="async">
+        </a>
+      {{ end }}
+      <div class="archive-item__body">
+        <a class="archive-item__title p-name" href="{{ .RelPermalink }}">{{ $title }}</a>
+        {{ with .Params.categories }}
+          <div class="archive-item__meta">
+            {{ range first 3 . }}
+              <span>{{ partial "category-label.html" . }}</span>
+            {{ end }}
+          </div>
+        {{ end }}
+      </div>
+    </article>
+  {{ end }}
+</div>
