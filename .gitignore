@@ -6,6 +6,7 @@ node_modules/
 public/
 resources/
 static/generated/
+static/_redirects
 
 # Original Micro.blog exports/backups
 *.bar

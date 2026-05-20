@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="{{ site.LanguageCode | default "en" }}">
+  <head>
+    <title>{{ .Permalink }}</title>
+    <link rel="canonical" href="{{ .Permalink }}">
+    <meta name="robots" content="noindex">
+    <meta charset="utf-8">
+    <meta http-equiv="refresh" content="0; url={{ .RelPermalink }}">
+  </head>
+  <body>
+    <a href="{{ .RelPermalink }}">Redirecting...</a>
+  </body>
+</html>
