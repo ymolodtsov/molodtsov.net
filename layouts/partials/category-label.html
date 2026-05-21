@@ -1,2 +1,2 @@
-{{ $key := lower . }}
-{{ index site.Data.category_labels $key | default . }}
+{{- $key := lower . -}}
+{{- index site.Data.category_labels $key | default . -}}

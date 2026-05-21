@@ -5,13 +5,12 @@
   <meta content="{{ .Site.Params.author.name }}" name="author">
 
 
-  <title>
-      {{- block "title" . -}}
-		{{- if .Title }}
-		 	{{ .Title }}
-		{{- end -}}
-      {{- end -}}
-  </title>
+  {{- $title := .Title -}}
+  {{- if and (eq .Kind "term") (eq .Data.Singular "category") -}}
+    {{- $term := .Data.Term | default .Title | lower -}}
+    {{- $title = index site.Data.category_labels $term | default .Title -}}
+  {{- end -}}
+  <title>{{ with $title }}{{ . }}{{ end }}</title>
 
   <link rel="canonical" href="{{ .Permalink }}">
 
