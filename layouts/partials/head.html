@@ -40,9 +40,9 @@
 	{{ with .Site.Params.instagram_username }}
 		<link rel="me" href="https://instagram.com/{{ . }}" />
 	{{ end }}
-<link rel="authorization_endpoint" href="https://pin.molodtsov.me/indiekit/auth">
-<link rel="token_endpoint" href="https://pin.molodtsov.me/indiekit/auth/token">
-<link rel="micropub" href="https://pin.molodtsov.me/indiekit/micropub">
+<link rel="authorization_endpoint" href="https://micro.molodtsov.net/auth">
+<link rel="token_endpoint" href="https://micro.molodtsov.net/auth/token">
+<link rel="micropub" href="https://micro.molodtsov.net/micropub">
 <meta property="og:image" content="{{ .Site.Params.site_image | absURL }}" />
 <meta name="twitter:image" content="{{ .Site.Params.site_image | absURL }}" />
     {{ range .Site.Params.plugins_css }}
