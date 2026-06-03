@@ -10,6 +10,9 @@
     {{- $term := .Data.Term | default .Title | lower -}}
     {{- $title = index site.Data.category_labels $term | default .Title -}}
   {{- end -}}
+  {{- if eq (strings.TrimSpace $title) "" -}}
+    {{- $title = .Site.Title -}}
+  {{- end -}}
   <title>{{ with $title }}{{ . }}{{ end }}</title>
 
   <link rel="canonical" href="{{ .Permalink }}">
