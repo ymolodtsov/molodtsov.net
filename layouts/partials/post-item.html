@@ -1,27 +1,60 @@
-<li>
-<article>
-  {{ if .Title }}
-  <section class="post-body">
-  <header>
-	<h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-  </header>
-  <section class="post-body">
-    {{ if .Truncated }}
-      {{ .Summary | safeHTML }}
-      <p><a class="cta" href="{{ .RelPermalink }}">Далее</a></p>
-    {{ else }}
-      {{ .Content }}
-    {{ end }}
-  </section>
-  </section>
-  {{ else }}
-	{{ .Content }}
-  {{ end }}
-  <a href="{{ .RelPermalink }}" class="u-url">
-	<aside class="dates">
-	  <time datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}" class="dt-published">→ {{ .Date.Day }} {{ index $.Site.Data.months (printf "%d" .Date.Month) }} {{ .Date.Year }} {{ .Date.Format "15:04" }}</time>
-	</aside>
-  </a>
-</article>
+{{ $categories := .Params.categories | default slice }}
+{{ $lowerCategories := apply $categories "lower" "." }}
+{{ $isPhoto := in $lowerCategories "photo" }}
+{{ $hasTitle := ne (strings.TrimSpace .Title) "" }}
+{{ $isSummary := and $hasTitle .Truncated }}
+{{ $previewHTML := .Content }}
+{{ if $isSummary }}
+  {{ $previewHTML = .Summary }}
+{{ end }}
+{{ $imagePattern := `(?s)<a[^>]*class="glightbox"[^>]*>.*?</a>|<img[^>]*>` }}
+{{ $previewImages := findRE $imagePattern (printf "%s" $previewHTML) }}
+{{ $previewImageCount := len $previewImages }}
+{{ $previewWithImageMarkers := replaceRE $imagePattern "MOSAICIMAGEPLACEHOLDER" (printf "%s" $previewHTML) }}
+{{ $plainPreviewWithImageMarkers := $previewWithImageMarkers | plainify }}
+{{ $hasMosaicRun := gt (len (findRE `(MOSAICIMAGEPLACEHOLDER[[:space:]]*){2,4}` $plainPreviewWithImageMarkers)) 0 }}
+{{ $isMosaic := and (ge $previewImageCount 2) (le $previewImageCount 4) $hasMosaicRun }}
+{{ $previewTextHTML := printf "%s" $previewHTML }}
+{{ if $isMosaic }}
+  {{ $previewTextHTML = replaceRE $imagePattern "" $previewTextHTML }}
+  {{ $previewTextHTML = replaceRE `(?s)<p>\s*</p>` "" $previewTextHTML }}
+  {{ $previewTextHTML = replaceRE `(?s)<center>\s*</center>` "" $previewTextHTML }}
+{{ end }}
+
+<li class="feed-item{{ if $isPhoto }} feed-item--photo{{ end }}{{ if not $hasTitle }} feed-item--note{{ end }}{{ if $isMosaic }} feed-item--mosaic feed-item--mosaic-{{ $previewImageCount }}{{ end }}">
+  <article class="feed-card h-entry">
+    <div class="feed-card__inner">
+      {{ if $isMosaic }}
+        <div class="feed-card__mosaic" aria-label="Фотографии">
+          {{ range $previewImages }}{{ . | safeHTML }}{{ end }}
+        </div>
+      {{ end }}
+
+      <div class="feed-card__meta">
+        {{ with $categories }}
+          <div class="post-tags" aria-label="Категории">
+            {{ range first 3 . }}
+              <a class="tag p-category" href="{{ printf "/categories/%s/" (. | urlize) }}">{{ partial "category-label.html" . }}</a>
+            {{ end }}
+          </div>
+        {{ end }}
+        <a href="{{ .RelPermalink }}" class="post-date u-url">
+          <time datetime="{{ .Date.Format "2006-01-02T15:04:05-0700" }}" class="dt-published">{{ .Date.Day }} {{ index $.Site.Data.months (printf "%d" .Date.Month) }} {{ .Date.Year }}</time>
+        </a>
+      </div>
+
+      {{ if $hasTitle }}
+        <header class="feed-card__header">
+          <h2 class="p-name"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+        </header>
+      {{ end }}
+
+      <section class="feed-card__body e-content post-body">
+        {{ $previewTextHTML | safeHTML }}
+        {{ if $isSummary }}
+          <p class="feed-card__more"><a class="cta" href="{{ .RelPermalink }}">Читать дальше <span aria-hidden="true">→</span></a></p>
+        {{ end }}
+      </section>
+    </div>
+  </article>
 </li>
-<span class="separator"><span class="divider"></span></span>

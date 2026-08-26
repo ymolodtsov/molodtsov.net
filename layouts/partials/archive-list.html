@@ -14,10 +14,6 @@
 }}
 
 <div class="archive">
-  <div class="archive__shortcuts">
-    <a href="/categories/favorites/">Избранное</a>
-  </div>
-
   {{ $currentYear := "" }}
   {{ $currentMonth := "" }}
   {{ $posts := where .Site.RegularPages.ByDate.Reverse "Type" "post" }}
