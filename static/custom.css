@@ -229,6 +229,12 @@ nav.main-nav a:hover {
   color: var(--accent-strong) !important;
 }
 
+nav.main-nav .main-nav__telegram,
+nav.main-nav .main-nav__telegram:visited {
+  margin-left: auto;
+  color: var(--accent) !important;
+}
+
 nav.main-nav a:active,
 a.cta:active,
 .pagination a:active {
@@ -521,6 +527,13 @@ body > section#wrapper {
 
 .feed-card__more {
   margin-top: 18px !important;
+}
+
+.feed-card__body > p:has(> a.glightbox) + .feed-card__more,
+.feed-card__body > p:has(> .feed-card__mosaic) + .feed-card__more,
+.feed-card__body > figure:has(> .feed-card__mosaic) + .feed-card__more {
+  margin-top: 0 !important;
+  padding-top: 24px;
 }
 
 a.cta,
@@ -984,13 +997,22 @@ body > section#wrapper:has(> .photos-grid) {
   }
 
   nav.main-nav {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     margin-top: 20px;
   }
 
   nav.main-nav a {
-    flex: 1 1 auto;
     justify-content: center;
-    padding-inline: 9px;
+    min-width: 0;
+    padding-inline: 4px;
+    font-size: 0.7rem;
+    white-space: nowrap;
+  }
+
+  nav.main-nav .main-nav__telegram,
+  nav.main-nav .main-nav__telegram:visited {
+    margin-left: 0;
   }
 
   body > section#wrapper {
