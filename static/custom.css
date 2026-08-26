@@ -452,7 +452,7 @@ body > section#wrapper {
   border-radius: 0 !important;
 }
 
-/* Media-first previews with two to four images */
+/* In-flow mosaics for previews with two to four consecutive images */
 
 .feed-item--mosaic .feed-card__inner {
   padding: 0 0 24px;
@@ -503,6 +503,20 @@ body > section#wrapper {
 .feed-item--mosaic .feed-card__meta {
   margin-top: 20px;
   margin-bottom: 8px;
+}
+
+.feed-item--mosaic .feed-card__body > p:has(> .feed-card__mosaic),
+.feed-item--mosaic .feed-card__body > figure:has(> .feed-card__mosaic) {
+  width: 100%;
+  max-width: none;
+  margin: 20px 0 0;
+  font-size: 0;
+  line-height: 0;
+}
+
+.feed-item--mosaic .feed-card__body > p:has(> .feed-card__mosaic):last-child,
+.feed-item--mosaic .feed-card__body > figure:has(> .feed-card__mosaic):last-child {
+  margin-bottom: -24px;
 }
 
 .feed-card__more {
@@ -1033,6 +1047,15 @@ body > section#wrapper:has(> .photos-grid) {
   .feed-item--mosaic .feed-card__header,
   .feed-item--mosaic .feed-card__body > * {
     width: calc(100% - 40px);
+  }
+
+  .feed-item--mosaic .feed-card__inner {
+    padding-bottom: 20px;
+  }
+
+  .feed-item--mosaic .feed-card__body > p:has(> .feed-card__mosaic):last-child,
+  .feed-item--mosaic .feed-card__body > figure:has(> .feed-card__mosaic):last-child {
+    margin-bottom: -20px;
   }
 
   .page-post > section#wrapper {

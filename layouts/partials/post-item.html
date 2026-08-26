@@ -12,24 +12,26 @@
 {{ $previewImageCount := len $previewImages }}
 {{ $previewWithImageMarkers := replaceRE $imagePattern "MOSAICIMAGEPLACEHOLDER" (printf "%s" $previewHTML) }}
 {{ $plainPreviewWithImageMarkers := $previewWithImageMarkers | plainify }}
-{{ $hasMosaicRun := gt (len (findRE `(MOSAICIMAGEPLACEHOLDER[[:space:]]*){2,4}` $plainPreviewWithImageMarkers)) 0 }}
+{{ $mosaicRunPattern := printf `(MOSAICIMAGEPLACEHOLDER[[:space:]]*){%d}` $previewImageCount }}
+{{ $hasMosaicRun := gt (len (findRE $mosaicRunPattern $plainPreviewWithImageMarkers)) 0 }}
 {{ $isMosaic := and (ge $previewImageCount 2) (le $previewImageCount 4) $hasMosaicRun }}
-{{ $previewTextHTML := printf "%s" $previewHTML }}
+{{ $previewDisplayHTML := printf "%s" $previewHTML }}
 {{ if $isMosaic }}
-  {{ $previewTextHTML = replaceRE $imagePattern "" $previewTextHTML }}
-  {{ $previewTextHTML = replaceRE `(?s)<p>\s*</p>` "" $previewTextHTML }}
-  {{ $previewTextHTML = replaceRE `(?s)<center>\s*</center>` "" $previewTextHTML }}
+  {{ $mosaicHTML := `<span class="feed-card__mosaic" aria-label="Фотографии">` }}
+  {{ range $previewImages }}
+    {{ $mosaicHTML = printf "%s%s" $mosaicHTML . }}
+  {{ end }}
+  {{ $mosaicHTML = printf "%s</span>" $mosaicHTML }}
+  {{ $previewDisplayHTML = replaceRE $imagePattern "MOSAICCONTENTPLACEHOLDER" $previewDisplayHTML 1 }}
+  {{ $previewDisplayHTML = replaceRE $imagePattern "" $previewDisplayHTML }}
+  {{ $previewDisplayHTML = replace $previewDisplayHTML "MOSAICCONTENTPLACEHOLDER" $mosaicHTML }}
+  {{ $previewDisplayHTML = replaceRE `(?s)<p>\s*</p>` "" $previewDisplayHTML }}
+  {{ $previewDisplayHTML = replaceRE `(?s)<center>\s*</center>` "" $previewDisplayHTML }}
 {{ end }}
 
 <li class="feed-item{{ if $isPhoto }} feed-item--photo{{ end }}{{ if not $hasTitle }} feed-item--note{{ end }}{{ if $isMosaic }} feed-item--mosaic feed-item--mosaic-{{ $previewImageCount }}{{ end }}">
   <article class="feed-card h-entry">
     <div class="feed-card__inner">
-      {{ if $isMosaic }}
-        <div class="feed-card__mosaic" aria-label="Фотографии">
-          {{ range $previewImages }}{{ . | safeHTML }}{{ end }}
-        </div>
-      {{ end }}
-
       <div class="feed-card__meta">
         {{ with $categories }}
           <div class="post-tags" aria-label="Категории">
@@ -50,7 +52,7 @@
       {{ end }}
 
       <section class="feed-card__body e-content post-body">
-        {{ $previewTextHTML | safeHTML }}
+        {{ $previewDisplayHTML | safeHTML }}
         {{ if $isSummary }}
           <p class="feed-card__more"><a class="cta" href="{{ .RelPermalink }}">Читать дальше <span aria-hidden="true">→</span></a></p>
         {{ end }}
