@@ -374,7 +374,8 @@ body > section#wrapper {
   margin-top: 0.75em;
 }
 
-.feed-card__body > :not(p:has(> a.glightbox)) {
+/* Keep the default text sizing below the mosaic inset rules in specificity. */
+.feed-card__body > :not(:where(p:has(> a.glightbox))) {
   width: min(100%, var(--feed-text-width));
   margin-inline: auto;
 }
