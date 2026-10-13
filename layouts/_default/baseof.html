@@ -3,9 +3,9 @@
 {{ partial "head.html" . }}
 <body{{ if and .IsPage (eq .Type "post") }} class="page-post"{{ else if .IsHome }} class="page-home"{{ end }}>
   {{ partial "header.html" . }}
-  <section id="wrapper" {{ with .File }}{{ if eq .Dir "about/" }} class="bio" {{ end }}{{ end }}>
+  <main id="wrapper">
 	{{ block "main" . }}{{ end }}
-  </section>
+  </main>
   {{ partial "footer.html" . }}
   {{ partial "custom_footer.html" . }}
 		{{ range .Site.Params.plugins_js }}

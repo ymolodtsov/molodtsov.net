@@ -1,13 +1,7 @@
 {{ $pag := $.Paginator }}
-
-<nav class="pagination" role="navigation">
-    {{ if or $pag.HasPrev $pag.HasNext }}
-		{{ if $pag.HasPrev }}
-			<a class="dates" href="{{ $pag.Prev.URL }}">← Позднее</a>
-		{{ end }}
-		<!--<span class="page-number">Page {{ $pag.PageNumber }} of {{ $pag.TotalPages }}</span>-->
-		{{ if $pag.HasNext }}
-			<a class="dates page-link" href="{{ $pag.Next.URL }}">Ранее →</a>
-		{{ end }}
-	{{ end }}
+{{ if or $pag.HasPrev $pag.HasNext }}
+<nav class="pagination" aria-label="Страницы">
+  {{ if $pag.HasPrev }}<a class="pagination__prev" href="{{ $pag.Prev.URL }}">← Позднее</a>{{ end }}
+  {{ if $pag.HasNext }}<a class="pagination__next" href="{{ $pag.Next.URL }}">Ранее →</a>{{ end }}
 </nav>
+{{ end }}

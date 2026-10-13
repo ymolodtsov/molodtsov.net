@@ -1,32 +1,55 @@
-<header class="site-header h-card">
-  <div class="site-header__identity">
-    <a class="site-header__avatar-link u-url" href="/" aria-label="На главную">
-      <img src="{{ .Site.Params.author.avatar }}" class="site-image u-photo" alt="{{ .Site.Params.author.name }}">
-    </a>
-    <div class="site-header__copy">
-      {{ if .IsHome }}
-        <h1 class="site-title p-name">{{ .Site.Params.author.name }}</h1>
-      {{ else }}
-        <a href="/" class="site-title p-name">{{ .Site.Params.author.name }}</a>
-      {{ end }}
-      {{ with .Site.Params.description }}
-        <p class="site-description">{{ . }}</p>
-      {{ end }}
-    </div>
-  </div>
+{{- $current := .RelPermalink -}}
+{{- $postCategories := slice -}}
+{{- if and .IsPage (eq .Type "post") -}}
+  {{- $postCategories = apply (.Params.categories | default slice) "lower" "." -}}
+{{- end -}}
+{{- $items := slice
+  (dict "name" "★ Избранное" "url" "/categories/favorites/" "category" "")
+  (dict "name" "Тексты" "url" "/categories/article/" "category" "article")
+  (dict "name" "Кино и ТВ" "url" "/categories/film/" "category" "film")
+  (dict "name" "Книги" "url" "/categories/book/" "category" "book")
+  (dict "name" "Путешествия" "url" "/categories/travel/" "category" "travel")
+-}}
+{{- range .Site.Menus.main -}}
+  {{- $url := .URL | relLangURL -}}
+  {{- with .Page -}}{{- with .Params.redirect_url -}}{{- $url = . -}}{{- end -}}{{- end -}}
+  {{- $items = $items | append (dict "name" .Name "url" $url "category" "") -}}
+{{- end -}}
+{{- /* A post highlights the first menu category it belongs to. */ -}}
+{{- $activeURL := $current -}}
+{{- range $items -}}
+  {{- if and .category (in $postCategories .category) (eq $activeURL $current) -}}
+    {{- $activeURL = .url -}}
+  {{- end -}}
+{{- end -}}
 
-  <nav class="main-nav" aria-label="Основная навигация">
-    <a href="/categories/article">Тексты</a>
-    <a href="/categories/film">Кино и ТВ</a>
-    <a href="/categories/book">Книги</a>
-    <a href="/categories/travel">Путешествия</a>
-    {{ range .Site.Menus.main }}
-      {{ if .Page.Params.redirect_url }}
-        <a href="{{ .Page.Params.redirect_url }}">{{ .Name }}</a>
-      {{ else }}
-        <a href="{{ .URL | relLangURL | safeURL }}">{{ .Name }}</a>
-      {{ end }}
-    {{ end }}
-    <a class="main-nav__telegram" href="https://t.me/nelate">Telegram</a>
+<header class="masthead h-card">
+  <a class="masthead__avatar u-url" href="/" aria-label="На главную">
+    <img src="{{ .Site.Params.author.avatar }}" class="u-photo" alt="{{ .Site.Params.author.name }}" width="56" height="56">
+  </a>
+  <p class="masthead__title">
+    {{- if .IsHome -}}
+      <span class="p-name">{{ .Site.Params.author.name }}</span>
+    {{- else -}}
+      <a class="p-name" href="/">{{ .Site.Params.author.name }}</a>
+    {{- end -}}
+  </p>
+  <p class="masthead__links">
+    <a href="https://t.me/nelate" rel="me">telegram</a>, <a href="https://instagram.com/{{ .Site.Params.instagram_username }}" rel="me">instagram</a> &amp; <a href="https://twitter.com/{{ .Site.Params.twitter_username }}" rel="me">twitter</a>
+  </p>
+
+  <nav class="menu" aria-label="Основная навигация">
+    <div class="menu__items">
+      {{- range $items }}
+        <a href="{{ .url }}"{{ if eq .url $activeURL }} class="is-active"{{ if eq .url $current }} aria-current="page"{{ end }}{{ end }}>{{ .name }}</a>
+      {{- end }}
+    </div>
+    <form class="menu__search" method="get" action="https://duckduckgo.com/" role="search">
+      <input type="hidden" name="sites" value="{{ "/" | absURL }}">
+      <input id="menu-search" type="search" name="q" maxlength="255" placeholder="Поиск" aria-label="Поиск по блогу">
+      <label for="menu-search" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="7.5" cy="7.5" r="5.75"/><path d="M11.75 11.75L16.25 16.25"/></svg>
+      </label>
+    </form>
   </nav>
 </header>

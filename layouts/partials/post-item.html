@@ -17,7 +17,7 @@
 {{ $isMosaic := and (ge $previewImageCount 2) (le $previewImageCount 4) $hasMosaicRun }}
 {{ $previewDisplayHTML := printf "%s" $previewHTML }}
 {{ if $isMosaic }}
-  {{ $mosaicHTML := `<span class="feed-card__mosaic" aria-label="Фотографии">` }}
+  {{ $mosaicHTML := `<span class="entry__mosaic" aria-label="Фотографии">` }}
   {{ range $previewImages }}
     {{ $mosaicHTML = printf "%s%s" $mosaicHTML . }}
   {{ end }}
@@ -29,34 +29,19 @@
   {{ $previewDisplayHTML = replaceRE `(?s)<center>\s*</center>` "" $previewDisplayHTML }}
 {{ end }}
 
-<li class="feed-item{{ if $isPhoto }} feed-item--photo{{ end }}{{ if not $hasTitle }} feed-item--note{{ end }}{{ if $isMosaic }} feed-item--mosaic feed-item--mosaic-{{ $previewImageCount }}{{ end }}">
-  <article class="feed-card h-entry">
-    <div class="feed-card__inner">
-      <div class="feed-card__meta">
-        {{ with $categories }}
-          <div class="post-tags" aria-label="Категории">
-            {{ range first 3 . }}
-              <a class="tag p-category" href="{{ printf "/categories/%s/" (. | urlize) }}">{{ partial "category-label.html" . }}</a>
-            {{ end }}
-          </div>
-        {{ end }}
-        <a href="{{ .RelPermalink }}" class="post-date u-url">
-          <time datetime="{{ .Date.Format "2006-01-02T15:04:05-0700" }}" class="dt-published">{{ .Date.Day }} {{ index $.Site.Data.months (printf "%d" .Date.Month) }} {{ .Date.Year }}</time>
-        </a>
-      </div>
+<li class="entry{{ if $isPhoto }} entry--photo{{ end }}{{ if not $hasTitle }} entry--note{{ end }}{{ if $isMosaic }} entry--mosaic entry--mosaic-{{ $previewImageCount }}{{ end }}">
+  <article class="h-entry">
+    {{ if $hasTitle }}
+      <h2 class="entry__title p-name"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+    {{ end }}
 
-      {{ if $hasTitle }}
-        <header class="feed-card__header">
-          <h2 class="p-name"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-        </header>
+    <div class="entry__body e-content post-body">
+      {{ $previewDisplayHTML | safeHTML }}
+      {{ if $isSummary }}
+        <p class="entry__more"><a href="{{ .RelPermalink }}">Читать дальше →</a></p>
       {{ end }}
-
-      <section class="feed-card__body e-content post-body">
-        {{ $previewDisplayHTML | safeHTML }}
-        {{ if $isSummary }}
-          <p class="feed-card__more"><a class="cta" href="{{ .RelPermalink }}">Читать дальше <span aria-hidden="true">→</span></a></p>
-        {{ end }}
-      </section>
     </div>
+
+    {{ partial "post-meta.html" . }}
   </article>
 </li>

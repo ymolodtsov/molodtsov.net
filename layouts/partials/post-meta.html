@@ -1,0 +1,8 @@
+<footer class="meta">
+  <a href="{{ .RelPermalink }}" class="meta__date u-url">
+    <time datetime="{{ .Date.Format "2006-01-02T15:04:05-0700" }}" class="dt-published">{{ .Date.Day }} {{ index site.Data.months (printf "%d" .Date.Month) }} {{ .Date.Year }}</time>
+  </a>
+  {{- range .Params.categories }}
+    <a class="meta__tag p-category" href="{{ printf "/categories/%s/" (. | urlize) }}">{{ partial "category-label.html" . | lower }}</a>
+  {{- end }}
+</footer>
