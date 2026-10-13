@@ -212,7 +212,7 @@ pre code {
 
 .masthead__title a {
   color: inherit;
-  text-decoration-color: var(--line);
+  text-decoration: none;
 }
 
 .masthead__title a:hover {
