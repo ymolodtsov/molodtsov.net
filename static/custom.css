@@ -847,10 +847,18 @@ img.inline {
   }
 
   /* The menu wraps instead of scrolling; search opens its own row. */
+  /* Every row gets its own rule, so the active underline always sits on one. */
   .menu {
+    --row: 36px;
     flex-wrap: wrap;
     gap: 0 14px;
     margin-top: 22px;
+    box-shadow: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0 calc(var(--row) - 1px),
+      var(--rule) calc(var(--row) - 1px) var(--row)
+    );
   }
 
   .menu__items,
@@ -859,13 +867,15 @@ img.inline {
   }
 
   .menu__items a {
+    height: var(--row);
     font-size: 16px;
+    line-height: 20px;
   }
 
   .menu__search-toggle {
     order: 1;
+    height: var(--row);
     margin-left: auto;
-    margin-bottom: 4px;
   }
 
   .menu__search input[type="search"],
@@ -879,8 +889,8 @@ img.inline {
   .menu.is-searching .menu__search input[type="search"] {
     display: block;
     width: 100%;
-    height: 44px;
-    margin: 2px 0 6px;
+    height: var(--row);
+    margin: 0;
     padding: 0;
     font-size: 17px;
     opacity: 1;
