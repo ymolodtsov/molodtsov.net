@@ -24,19 +24,23 @@
 {{- end -}}
 
 <header class="masthead h-card">
-  <a class="masthead__avatar u-url" href="/" aria-label="На главную">
-    <img src="{{ .Site.Params.author.avatar }}" class="u-photo" alt="{{ .Site.Params.author.name }}" width="56" height="56">
-  </a>
-  <p class="masthead__title">
-    {{- if .IsHome -}}
-      <span class="p-name">{{ .Site.Params.author.name }}</span>
-    {{- else -}}
-      <a class="p-name" href="/">{{ .Site.Params.author.name }}</a>
-    {{- end -}}
-  </p>
-  <p class="masthead__links">
-    <a href="https://t.me/nelate" rel="me">telegram</a>, <a href="https://instagram.com/{{ .Site.Params.instagram_username }}" rel="me">instagram</a> &amp; <a href="https://twitter.com/{{ .Site.Params.twitter_username }}" rel="me">twitter</a>
-  </p>
+  <div class="masthead__row">
+    <a class="masthead__avatar u-url" href="/" aria-label="На главную">
+      <img src="{{ .Site.Params.author.avatar }}" class="u-photo" alt="{{ .Site.Params.author.name }}" width="64" height="64">
+    </a>
+    <div>
+      <p class="masthead__title">
+        {{- if .IsHome -}}
+          <span class="p-name">{{ .Site.Params.author.name }}</span>
+        {{- else -}}
+          <a class="p-name" href="/">{{ .Site.Params.author.name }}</a>
+        {{- end -}}
+      </p>
+      <p class="masthead__links">
+        <a href="https://t.me/nelate" rel="me">telegram</a>, <a href="https://instagram.com/{{ .Site.Params.instagram_username }}" rel="me">instagram</a> &amp; <a href="https://twitter.com/{{ .Site.Params.twitter_username }}" rel="me">twitter</a>
+      </p>
+    </div>
+  </div>
 
   <nav class="menu" aria-label="Основная навигация">
     <div class="menu__items">
@@ -44,7 +48,7 @@
         <a href="{{ .url }}"{{ if eq .url $activeURL }} class="is-active"{{ if eq .url $current }} aria-current="page"{{ end }}{{ end }}>{{ .name }}</a>
       {{- end }}
     </div>
-    <form class="menu__search" method="get" action="https://duckduckgo.com/" role="search">
+    <form class="menu__search" data-search method="get" action="https://duckduckgo.com/" role="search">
       <input type="hidden" name="sites" value="{{ "/" | absURL }}">
       <input id="menu-search" type="search" name="q" maxlength="255" placeholder="Поиск" aria-label="Поиск по блогу">
       <label for="menu-search" aria-hidden="true">
@@ -52,4 +56,5 @@
       </label>
     </form>
   </nav>
+  <div class="search-results" id="search-results" aria-live="polite" hidden></div>
 </header>

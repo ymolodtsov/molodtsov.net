@@ -1,5 +1,10 @@
 {{ define "main" }}
-<article class="h-entry post">
+{{- $searchTitle := .Title | default (.Summary | plainify | strings.TrimSpace | truncate 80) | default "Фото" -}}
+{{- $searchDate := printf "%d %s %d" .Date.Day (index site.Data.months (printf "%d" .Date.Month)) .Date.Year -}}
+{{- /* Separate elements: values may contain commas, which break the inline meta syntax. */}}
+<span data-pagefind-meta="title" hidden>{{ $searchTitle }}</span>
+<span data-pagefind-meta="date" hidden>{{ $searchDate }}</span>
+<article class="h-entry post" data-pagefind-body>
   {{ with .Title }}
     <h1 class="post__title p-name">{{ . }}</h1>
   {{ end }}
