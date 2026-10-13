@@ -97,6 +97,24 @@
     });
   }
 
+  var menu = form.closest(".menu");
+  var toggle = form.querySelector(".menu__search-toggle");
+
+  // On phones the magnifier opens a search row under the menu.
+  toggle.addEventListener("click", function (event) {
+    event.preventDefault();
+    var opening = !menu.classList.contains("is-searching");
+    menu.classList.toggle("is-searching", opening);
+    toggle.setAttribute("aria-expanded", String(opening));
+    if (opening) {
+      input.focus();
+    } else {
+      input.value = "";
+      close();
+      input.blur();
+    }
+  });
+
   input.addEventListener("focus", load, { once: true });
 
   input.addEventListener("input", function () {
@@ -107,6 +125,8 @@
     if (event.key === "Escape") {
       input.value = "";
       close();
+      menu.classList.remove("is-searching");
+      toggle.setAttribute("aria-expanded", "false");
       input.blur();
     }
   });

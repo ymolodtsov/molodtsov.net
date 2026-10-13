@@ -51,9 +51,9 @@
     <form class="menu__search" data-search method="get" action="https://duckduckgo.com/" role="search">
       <input type="hidden" name="sites" value="{{ "/" | absURL }}">
       <input id="menu-search" type="search" name="q" maxlength="255" placeholder="Поиск" aria-label="Поиск по блогу">
-      <label for="menu-search" aria-hidden="true">
+      <button class="menu__search-toggle" type="button" aria-label="Поиск" aria-controls="menu-search" aria-expanded="false">
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="7.5" cy="7.5" r="5.75"/><path d="M11.75 11.75L16.25 16.25"/></svg>
-      </label>
+      </button>
     </form>
   </nav>
   <div class="search-results" id="search-results" aria-live="polite" hidden></div>
