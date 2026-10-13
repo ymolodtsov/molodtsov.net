@@ -100,12 +100,12 @@
   var menu = form.closest(".menu");
   var toggle = form.querySelector(".menu__search-toggle");
 
-  // On phones the magnifier opens a search row under the menu.
-  toggle.addEventListener("click", function (event) {
-    event.preventDefault();
-    var opening = !menu.classList.contains("is-searching");
+  var closeButton = form.querySelector(".menu__search-close");
+
+  function setOpen(opening) {
     menu.classList.toggle("is-searching", opening);
     toggle.setAttribute("aria-expanded", String(opening));
+    closeButton.hidden = !opening;
     if (opening) {
       input.focus();
     } else {
@@ -113,6 +113,16 @@
       close();
       input.blur();
     }
+  }
+
+  // On phones the magnifier opens a search row under the menu.
+  toggle.addEventListener("click", function (event) {
+    event.preventDefault();
+    setOpen(!menu.classList.contains("is-searching"));
+  });
+
+  closeButton.addEventListener("click", function () {
+    setOpen(false);
   });
 
   input.addEventListener("focus", load, { once: true });
@@ -123,11 +133,7 @@
 
   input.addEventListener("keydown", function (event) {
     if (event.key === "Escape") {
-      input.value = "";
-      close();
-      menu.classList.remove("is-searching");
-      toggle.setAttribute("aria-expanded", "false");
-      input.blur();
+      setOpen(false);
     }
   });
 

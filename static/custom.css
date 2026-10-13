@@ -288,6 +288,10 @@ pre code {
   cursor: pointer;
 }
 
+.menu__search-close {
+  display: none;
+}
+
 .menu__search-toggle:hover {
   color: var(--heading);
 }
@@ -886,9 +890,39 @@ img.inline {
     flex-basis: 100%;
   }
 
+  /* A new line starts before the field; the close button sits at its end. */
+  .menu.is-searching::after {
+    content: "";
+    order: 2;
+    flex-basis: 100%;
+  }
+
+  .menu.is-searching .menu__search input[type="search"] {
+    order: 3;
+  }
+
+  .menu__search input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .menu.is-searching .menu__search-close {
+    display: grid;
+    order: 4;
+    width: 32px;
+    height: var(--row);
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--muted);
+    place-items: center;
+    cursor: pointer;
+  }
+
   .menu.is-searching .menu__search input[type="search"] {
     display: block;
-    width: 100%;
+    flex: 1 1 0;
+    width: auto;
     height: var(--row);
     margin: 0;
     padding: 0;

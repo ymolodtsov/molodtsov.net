@@ -78,7 +78,7 @@
     "instagram_username": "ymolodtsov",
     "paginate_home": true,
     "paginate_categories": true,
-    "theme_seconds": "7",
+    "theme_seconds": "8",
     "plugins_css": [
       "/css/all.min.css?v=5",
       "/css/photos-grid.css?v=7",
