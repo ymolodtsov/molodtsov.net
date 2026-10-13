@@ -16,7 +16,7 @@
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
   --wide: 1040px;
-  --measure: 760px;
+  --measure: 820px;
   --gutter: clamp(16px, 5vw, 64px);
   --text-size: 20px;
 }

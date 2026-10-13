@@ -114,7 +114,22 @@
   form.addEventListener("submit", function (event) {
     if (unavailable) return;
     event.preventDefault();
-    if (results.length) window.location.href = results[0].url;
+    var query = input.value.trim();
+    if (!query) return;
+    if (results.length && query === latestQuery) {
+      window.location.href = results[0].url;
+      return;
+    }
+    // Enter pressed before the debounced results arrived.
+    load().then(function (pf) {
+      if (!pf) return form.submit();
+      return pf.search(query).then(function (found) {
+        if (!found.results.length) return search(query);
+        return found.results[0].data().then(function (item) {
+          window.location.href = item.url;
+        });
+      });
+    });
   });
 
   document.addEventListener("click", function (event) {

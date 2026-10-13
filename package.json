@@ -4,7 +4,8 @@
   "description": "A regular Hugo version of the blog exported from Micro.blog.",
   "scripts": {
     "build": "node scripts/generate-netlify-redirects.mjs && node scripts/generate-image-derivatives.mjs && hugo --gc --minify && node scripts/remove-public-alias-files.mjs && pagefind --site public",
-    "optimize-images": "node scripts/optimize-images.mjs"
+    "optimize-images": "node scripts/optimize-images.mjs",
+    "dev": "hugo --quiet -d .pagefind-build && pagefind --site .pagefind-build --output-path static/pagefind && rm -rf .pagefind-build && hugo server"
   },
   "repository": {
     "type": "git",

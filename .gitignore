@@ -7,6 +7,8 @@ public/
 resources/
 static/generated/
 static/_redirects
+static/pagefind/
+.pagefind-build/
 
 # Original Micro.blog exports/backups
 *.bar
