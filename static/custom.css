@@ -488,9 +488,15 @@ img.inline {
   max-height: 88vh;
 }
 
+/* Many uploads carry a dark 1px resize artefact on the right or bottom edge. */
+.post-body img:not(.inline),
+#wrapper .photos-grid__item img {
+  clip-path: inset(0 1px 1px 0);
+}
+
 /* Several images written on consecutive lines share one paragraph. */
-.post-body a.glightbox + a.glightbox,
-.post-body a.glightbox + br + a.glightbox {
+.post-body > p > a.glightbox + a.glightbox,
+.post-body > p > a.glightbox + br + a.glightbox {
   margin-top: 8px;
 }
 

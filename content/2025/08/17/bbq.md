@@ -29,8 +29,6 @@ aliases:
 
 ![](/uploads/2025/b9ee0beb-ee28-403e-adae-8774a52fd38d.jpg)
 
-<!--more-->
 ![](/uploads/2025/3f0e256d-3de9-4f86-a068-d02c5c49f86c.jpg)
 
 ![](/uploads/2025/c8fd4046-26e4-4100-8f3e-5fd977594b8c.jpg)
-
