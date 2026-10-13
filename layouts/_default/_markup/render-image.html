@@ -10,6 +10,12 @@
     {{ $display = $generated }}
   {{ end }}
 {{ end }}
+{{- /* Real dimensions let the browser reserve space before the image loads. */ -}}
+{{ $size := dict }}
+{{ $file := printf "static%s" (replaceRE `\?.*$` "" $display) }}
+{{ if and (hasPrefix $display "/") (fileExists $file) (findRE `(?i)\.(jpe?g|png|webp|gif)$` $file) }}
+  {{ with images.Config $file }}{{ $size = dict "width" .Width "height" .Height }}{{ end }}
+{{ end }}
 <a href="{{ .Destination | safeURL }}" 
    class="glightbox"
    data-gallery="{{ .Page.File.UniqueID }}"
@@ -17,6 +23,7 @@
 >
   <img src ="{{ $display | safeURL }}" 
        alt="{{ .Text }}" 
+       {{ with $size.width }}width="{{ . }}" height="{{ $size.height }}"{{ end }}
        loading="lazy"
        decoding="async"
        {{ with .Title }}

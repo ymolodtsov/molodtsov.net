@@ -195,8 +195,6 @@ pre code {
   height: 64px;
   border-radius: 50%;
   object-fit: cover;
-  outline: 1px solid rgba(0, 0, 0, 0.08);
-  outline-offset: -1px;
 }
 
 .masthead__title,
@@ -488,7 +486,16 @@ img.inline {
   width: auto;
   max-width: 100%;
   max-height: 88vh;
-  background: var(--surface);
+}
+
+/* Several images written on consecutive lines share one paragraph. */
+.post-body a.glightbox + a.glightbox,
+.post-body a.glightbox + br + a.glightbox {
+  margin-top: 8px;
+}
+
+.post-body p > a.glightbox + br {
+  display: none;
 }
 
 .post-body figcaption {
@@ -785,12 +792,14 @@ img.inline {
 
 #wrapper .photos-grid__item {
   border-radius: 2px;
-  background: var(--surface);
+  background: transparent;
   text-decoration: none;
 }
 
 #wrapper .photos-grid__item img {
   max-height: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
   transition: transform 450ms cubic-bezier(0.2, 0.7, 0.2, 1), filter 450ms ease-out;
 }
 
