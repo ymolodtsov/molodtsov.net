@@ -42,8 +42,9 @@
 <link rel="authorization_endpoint" href="https://micro.molodtsov.net/auth">
 <link rel="token_endpoint" href="https://micro.molodtsov.net/auth/token">
 <link rel="micropub" href="https://micro.molodtsov.net/micropub">
-<meta property="og:image" content="{{ .Site.Params.site_image | absURL }}" />
-<meta name="twitter:image" content="{{ .Site.Params.site_image | absURL }}" />
+{{ $ogimg := .Site.Params.site_image }}{{ with .Params.photos }}{{ $ogimg = index . 0 }}{{ else }}{{ with .Params.images }}{{ $ogimg = index . 0 }}{{ end }}{{ end }}
+{{ if not .Params.photos }}<meta property="og:image" content="{{ $ogimg | absURL }}" />{{ end }}
+<meta name="twitter:image" content="{{ $ogimg | absURL }}" />
     {{ range .Site.Params.plugins_css }}
 	    <link rel="stylesheet" href="{{ . }}" />
     {{ end }}
