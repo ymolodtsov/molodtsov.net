@@ -81,7 +81,7 @@
     "theme_seconds": "10",
     "plugins_css": [
       "/css/all.min.css?v=5",
-      "/css/photos-grid.css?v=7",
+      "/css/photos-grid.css?v=8",
       "/img-gallery.css?v=5"
     ],
     "plugins_js": [
