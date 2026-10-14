@@ -669,6 +669,78 @@ img.inline {
   max-width: var(--measure);
 }
 
+/* Related posts under a post */
+
+.related {
+  max-width: var(--measure);
+  margin-top: 56px;
+}
+
+.related__heading {
+  margin-bottom: 4px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.related__heading a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.related__heading a:hover {
+  color: var(--accent);
+}
+
+.related__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 32px;
+  padding: 0;
+  list-style: none;
+}
+
+.related__item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding-top: 14px;
+  border-top: 1px solid var(--rule);
+}
+
+.related__thumb {
+  flex: none;
+  width: 72px;
+  height: 72px;
+  overflow: hidden;
+  border-radius: 3px;
+  background: var(--surface);
+}
+
+.related__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.related__title {
+  color: var(--heading);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.3;
+  text-decoration-color: var(--line);
+}
+
+.related__title:hover {
+  color: var(--accent);
+}
+
+.related__date {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
 /* Pagination */
 
 .pagination {
@@ -944,6 +1016,11 @@ img.inline {
 
   .post__title {
     font-size: 30px;
+  }
+
+  .related__list {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
   }
 
   .post-body h2 {

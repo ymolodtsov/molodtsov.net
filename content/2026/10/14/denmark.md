@@ -6,6 +6,7 @@ lastmod: 2026-10-14T10:21:09+01:00
 type: post
 categories:
   - photo
+  - travel
 url: "/2026/10/14/denmark/"
 images:
   - /uploads/2026/denmark-01.jpeg

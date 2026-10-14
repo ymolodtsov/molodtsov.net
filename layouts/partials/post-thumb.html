@@ -1,0 +1,17 @@
+{{- /* Returns the small thumbnail URL for a post's first photo, or "". */ -}}
+{{- $thumb := "" -}}
+{{- with .Params.photos_with_metadata -}}
+  {{- with index . 0 -}}
+    {{- if reflect.IsMap . -}}{{- $thumb = .url -}}{{- else -}}{{- $thumb = . -}}{{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if not $thumb -}}{{- with .Params.photos -}}{{- $thumb = index . 0 -}}{{- end -}}{{- end -}}
+{{- if not $thumb -}}{{- with .Params.images -}}{{- $thumb = index . 0 -}}{{- end -}}{{- end -}}
+{{- if $thumb -}}
+  {{- $clean := replaceRE "^/" "" $thumb -}}
+  {{- if hasPrefix $clean "uploads/" -}}
+    {{- $generated := replaceRE "\\.(?i:jpe?g|png|webp)$" "-thumb.webp" (printf "/generated/%s" $clean) -}}
+    {{- if fileExists (printf "static%s" $generated) -}}{{- $thumb = $generated -}}{{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $thumb -}}
