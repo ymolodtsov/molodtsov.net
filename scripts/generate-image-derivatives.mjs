@@ -52,7 +52,7 @@ async function convert(source, output, width, quality) {
     await sharp(source, { animated: false })
       .rotate()
       .resize({ width, withoutEnlargement: true })
-      .webp({ quality })
+      .webp({ quality, smartSubsample: true })
       .toFile(output);
     return { skipped: false };
   }
@@ -80,7 +80,7 @@ let skipped = 0;
 for (const source of walk(uploadsRoot)) {
   for (const derivative of [
     { suffix: "thumb", width: 480, quality: 72 },
-    { suffix: "inline", width: 1600, quality: 80 },
+    { suffix: "inline", width: 1600, quality: 90 },
   ]) {
     const result = await convert(source, outputPath(source, derivative.suffix), derivative.width, derivative.quality);
     if (result.skipped) {
